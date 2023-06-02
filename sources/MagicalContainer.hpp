@@ -11,8 +11,7 @@ namespace ariel
 {
     class MagicalContainer {
     private:
-        // Node* elements;
-        vector<int> elements;
+        Node* elements;
         unsigned long int Size;
 
     public:
