@@ -15,25 +15,39 @@ namespace ariel
         unsigned long int Size;
 
     public:
+        MagicalContainer();
+        ~MagicalContainer();
         void addElement(int element);
+        void removeElement(Node* element);
         void removeElement(int element);
         unsigned long int size() const;    
+        //for test 
+        Node* getelements()
+        {
+            return this->elements;
+        }
+        void setelements(Node* elements)
+        {
+            this->elements = elements;
+        }
+        //for test
 
     class AscendingIterator {
     private:
         const MagicalContainer& container;
+        Node* currentElement;
         unsigned long int currentIndex;
 
     public:
         //Default constructor
-        AscendingIterator(const MagicalContainer& cont, unsigned long int index = 0)
-            : container(cont), currentIndex(index) {}
+        AscendingIterator(const MagicalContainer& contt, unsigned long int index = 0)
+            : container(contt), currentIndex(index) , currentElement(contt.elements) {}
         //Destructor
         ~AscendingIterator(){};
 
         // Copy constructor
         AscendingIterator(const AscendingIterator& other)
-            : container(other.container), currentIndex(other.currentIndex) {}
+            : container(other.container), currentIndex(other.currentIndex) , currentElement(other.currentElement){}
 
        // Assignment operator "=" 
         AscendingIterator& operator=(const AscendingIterator& other);
