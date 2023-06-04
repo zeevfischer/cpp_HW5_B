@@ -13,7 +13,9 @@ namespace ariel
     private:
         Node* elements;
         Node* prime;
-        unsigned long int Size;
+        Node* end;
+        int Size;
+        int primesize;
 
     public:
         MagicalContainer();
@@ -21,8 +23,12 @@ namespace ariel
         void addElement(int element);
         void removeElement(Node* element);
         void removeElement(int element);
-        unsigned long int size() const;    
+        int size() const;    
         //for test 
+        Node* getend()
+        {
+            return this->end;
+        }
         Node* getelements()
         {
             return this->elements;
@@ -41,12 +47,12 @@ namespace ariel
     private:
         const MagicalContainer& container;
         Node* currentElement;
-        unsigned long int currentIndex;
+        int currentIndex;
 
     public:
         //Default constructor
-        AscendingIterator(const MagicalContainer& contt, unsigned long int index = 0)
-            : container(contt), currentIndex(index) , currentElement(contt.elements) {}
+        AscendingIterator(const MagicalContainer& cont, unsigned long int index = 0)
+            : container(cont), currentIndex(index) , currentElement(cont.elements) {}
         //Destructor
         ~AscendingIterator(){};
 
@@ -82,19 +88,21 @@ namespace ariel
     class SideCrossIterator {
     private:
         const MagicalContainer& container;
-        unsigned long int currentIndex;
-        bool moveFromStart;
+        Node* start = nullptr;
+        Node* End = nullptr;
+        bool FromStart = true;
+        int index = 0;
 
     public:
         //Default constructor
-        SideCrossIterator(const MagicalContainer& cont, unsigned long int index = 0, bool start = true)
-            : container(cont), currentIndex(index), moveFromStart(start) {}
+        SideCrossIterator(const MagicalContainer& cont, unsigned long int index = 0)
+            : container(cont) ,start(cont.elements),End(cont.end) {}
         //Destructor
         ~SideCrossIterator(){};
 
         // Copy constructor
         SideCrossIterator(const SideCrossIterator& other)
-            : container(other.container), currentIndex(other.currentIndex), moveFromStart(other.moveFromStart) {}
+            : container(other.container), start(other.container.elements),End(other.container.end),FromStart(other.FromStart), index(other.index){}
 
         // Assignment operator "="
             SideCrossIterator& operator=(const SideCrossIterator& other);
@@ -124,21 +132,22 @@ namespace ariel
     class PrimeIterator {
     private:
         const MagicalContainer& container;
-        unsigned long int currentIndex;
+        Node* current;
+        int currentIndex;
 
         bool isPrime(int num) const;
 
     public:
         //Default constructor
-        PrimeIterator(const MagicalContainer& cont, unsigned long int index = 0)
-            : container(cont), currentIndex(index){
+        PrimeIterator(const MagicalContainer& cont, int index = 0)
+            : container(cont), currentIndex(index),current(container.prime){
         }
         //Destructor
         ~PrimeIterator(){};
 
         // Copy constructor
         PrimeIterator(const PrimeIterator& other)
-            : container(other.container), currentIndex(other.currentIndex) {}
+            : container(other.container), currentIndex(other.currentIndex), current(other.current){}
         
         // Assignment operator "="
             PrimeIterator& operator=(const PrimeIterator& other);
