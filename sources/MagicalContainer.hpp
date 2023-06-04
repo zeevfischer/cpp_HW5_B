@@ -12,6 +12,7 @@ namespace ariel
     class MagicalContainer {
     private:
         Node* elements;
+        Node* prime;
         unsigned long int Size;
 
     public:
@@ -23,6 +24,10 @@ namespace ariel
         unsigned long int size() const;    
         //for test 
         Node* getelements()
+        {
+            return this->elements;
+        }
+        Node* getPrimeElements()
         {
             return this->elements;
         }

@@ -14,19 +14,37 @@ int main() {
     cout << "adding 25" << endl;
     container.addElement(25);
     cout << "added 25" << endl;
+    cout << "adding 61" << endl;
+    container.addElement(61);
+    cout << "added 61" << endl;
     cout << "adding 9" << endl;
     container.addElement(9);
     cout << "added 9" << endl;
     cout << "adding 3" << endl;
     container.addElement(3);
     cout << "added 3" << endl;
+    container.addElement(5);
+    container.addElement(4);
     
     cout << endl;
+    Node* temp = container.getelements();
     for(int i=0;i<container.size();i++)
     {
-        container.getelements()->print();
-        if(container.getelements()->Getnext() != nullptr)
-            container.setelements(container.getelements()->Getnext());
+        temp->print();
+        if(temp->Getnext() != nullptr)
+            temp = temp->Getnext();
+    }
+    cout << endl;
+    temp = container.getPrimeElements();
+    // temp->GetprimeNext()->print();
+    while(temp != nullptr)
+    {   
+        //if temp prime print it 
+        if(temp->GetisPrime() == true)
+            temp->print();
+
+        if(temp != nullptr)
+            temp = temp->GetprimeNext();
     }
     // // Print container size
     // std::cout << "Size of container: " << container.size() << std::endl;

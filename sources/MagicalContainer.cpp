@@ -23,8 +23,10 @@ namespace ariel {
         //if this is the first element in the list
         if(this->elements == nullptr)
         {
-            // cout << "first" << endl;
-            // Newelement->Setindex(0);
+            if(Newelement->GetisPrime() == true && this->prime == nullptr)
+            {
+                this->prime = Newelement;
+            }
             this->elements = Newelement; 
             this->Size++;
             return;
@@ -66,10 +68,39 @@ namespace ariel {
         //if Newelement is prime 
         if(Newelement->GetisPrime() == true)
         {
-            /*
-                first prime number will point to the first element 
-                adding a number if its prime set pointers only of prime numbers !!!!
-            */
+            cout << "prime" << endl;
+            // not the first element in the list that is aken car of up top
+            // create a new pointer to the prime 
+            temp = this->prime;
+            //move the pointer to next prime
+            while (temp->GetprimeNext() != nullptr && temp->Getdata() < Newelement->Getdata())
+            {
+                cout << "moved" << endl;
+                temp = temp->GetprimeNext();
+            }
+            if(temp->Getdata() < Newelement->Getdata())
+            {
+                cout << "adding after temp" <<endl; 
+                Newelement->SetprimeNext(temp->GetprimeNext());
+                Newelement->SetprimePrev(temp);
+                temp->SetprimeNext(Newelement);
+            }
+            if(temp->Getdata() > Newelement->Getdata())
+            {
+                cout << "adding befor temp" <<endl; 
+                if(temp->GetprimePrev() == nullptr)
+                {
+                    cout << "changed root" <<endl;
+                    this->prime = Newelement;
+                }
+                if(temp->GetprimePrev() != nullptr)
+                {
+                    temp->GetprimePrev()->SetprimeNext(Newelement);
+                }
+                Newelement->SetprimeNext(temp);
+                Newelement->SetprimePrev(temp->GetprimePrev());
+                temp->SetprimePrev(Newelement);
+            }
         }
     }
 
