@@ -6,19 +6,16 @@ using namespace std;
 Node::Node(int data)
 {
     this->data = data;
-    // this->index = 0;
     this->next = nullptr;
     this->prev = nullptr;
 
     this->isPrime = this->Prime(data);
-    // this->primeIndex = 0;
     this->PrimeNext = nullptr;
     this->PrimePrev = nullptr;
 }
 void Node::print()
 {
     cout << "data: " << this->data << endl;
-    // cout << "index: " << this->index << endl;
     cout << "is prime: " << this->isPrime << endl; 
 }
 bool Node::Prime(int data)
@@ -45,10 +42,6 @@ void Node::Setdata(int data)
 {
     this->data = data;
 }
-// void Node::Setindex(int index)
-// {
-//     this->index = index;
-// }
 void Node::SetNext(Node* next)
 {
     this->next = next;
@@ -61,10 +54,6 @@ void Node::SetisPrime(bool isprime)
 {
     this->isPrime = isprime;
 }
-// void Node::SetprimeIndex(int primeIndex)
-// {
-//     this->primeIndex = primeIndex;
-// }
 void Node::SetprimeNext(Node* primeNext)
 {
     this->PrimeNext = primeNext;
@@ -78,10 +67,6 @@ int Node::Getdata()
 {
     return this->data;
 }
-// int Node::Getindex()
-// {
-//     return this->index;
-// }
 Node* Node::Getnext()
 {
     return this->next;
@@ -94,10 +79,6 @@ bool Node::GetisPrime()
 {
     return this->isPrime;
 }
-// int Node::GetprimeIndex()
-// {
-//     return this->primeIndex;
-// }
 Node* Node::GetprimeNext()
 {
     return this->PrimeNext;
@@ -106,7 +87,3 @@ Node* Node::GetprimePrev()
 {
     return this->PrimePrev;
 }
-// Node& Node::operator=(const Node& other)
-// {
-
-// }

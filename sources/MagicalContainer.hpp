@@ -23,7 +23,8 @@ namespace ariel
         void addElement(int element);
         void removeElement(Node* element);
         void removeElement(int element);
-        int size() const;    
+        int size() const;  
+
         //for test 
         Node* getend()
         {
@@ -42,6 +43,65 @@ namespace ariel
             this->elements = elements;
         }
         //for test
+        
+        ////////////////////////////////tidy
+        // Copy constructor
+        MagicalContainer(const MagicalContainer& other)
+            : elements(nullptr), prime(nullptr), end(nullptr), Size(0), primesize(0) {
+            *this = other;
+        }
+
+        // Copy assignment operator
+        MagicalContainer& operator=(const MagicalContainer& other) {
+            if (this != &other) 
+            {
+                this->elements = other.elements;
+                this->Size = other.Size;
+                this->prime = other.prime;
+                this->primesize = other.primesize;
+                this->end = other.end;   
+            }
+            return *this;
+        }
+
+        // Move constructor
+        MagicalContainer(MagicalContainer&& other) noexcept
+            : elements(other.elements), prime(other.prime), end(other.end), Size(other.Size), primesize(other.primesize) {
+            // Reset other's data
+            other.elements = nullptr;
+            other.prime = nullptr;
+            other.end = nullptr;
+            other.Size = 0;
+            other.primesize = 0;
+        }
+
+        // Move assignment operator
+        MagicalContainer& operator=(MagicalContainer&& other) noexcept 
+        {
+            if (this != &other) {
+                // Clear current data
+                delete[] elements;
+                delete[] prime;
+                delete[] end;
+
+                // Move other's data
+                elements = other.elements;
+                prime = other.prime;
+                end = other.end;
+                Size = other.Size;
+                primesize = other.primesize;
+
+                // Reset other's data
+                other.elements = nullptr;
+                other.prime = nullptr;
+                other.end = nullptr;
+                other.Size = 0;
+                other.primesize = 0;
+            }
+
+            return *this;
+        }
+        ////////////////////////////////tidy
 
     class AscendingIterator {
     private:
@@ -51,8 +111,10 @@ namespace ariel
 
     public:
         //Default constructor
-        AscendingIterator(const MagicalContainer& cont, unsigned long int index = 0)
-            : container(cont), currentIndex(index) , currentElement(cont.elements) {}
+        AscendingIterator(const MagicalContainer& cont)
+            : container(cont), currentIndex(0) , currentElement(cont.elements)
+        {
+        }
         //Destructor
         ~AscendingIterator(){};
 
@@ -83,6 +145,31 @@ namespace ariel
 
         AscendingIterator begin();
         AscendingIterator end();
+        /////////////////////tidy
+        // Move constructor
+        AscendingIterator(AscendingIterator&& other) noexcept
+            : container(other.container), currentElement(other.currentElement), currentIndex(other.currentIndex) {
+            // Reset other's data
+            other.currentElement = nullptr;
+            other.currentIndex = 0;
+        }
+
+        // Move assignment operator
+        AscendingIterator& operator=(AscendingIterator&& other)noexcept
+        {
+            if (this != &other) {
+                // Move other's data
+                currentElement = other.currentElement;
+                currentIndex = other.currentIndex;
+
+                // Reset other's data
+                other.currentElement = nullptr;
+                other.currentIndex = 0;
+            }
+
+            return *this;
+        }
+        /////////////////////tidy
     };
 
     class SideCrossIterator {
@@ -127,6 +214,36 @@ namespace ariel
 
         SideCrossIterator begin();
         SideCrossIterator end();
+        ////////////tidy
+        // Move constructor
+        SideCrossIterator(SideCrossIterator&& other)noexcept
+            : container(other.container), start(other.start), End(other.End), FromStart(other.FromStart), index(other.index) {
+            // Reset other's data
+            other.start = nullptr;
+            other.End = nullptr;
+            other.FromStart = true;
+            other.index = 0;
+        }
+
+        // Move assignment operator
+        SideCrossIterator& operator=(SideCrossIterator&& other) noexcept {
+            if (this != &other) {
+                // Move other's data
+                start = other.start;
+                End = other.End;
+                FromStart = other.FromStart;
+                index = other.index;
+
+                // Reset other's data
+                other.start = nullptr;
+                other.End = nullptr;
+                other.FromStart = true;
+                other.index = 0;
+            }
+
+            return *this;
+        }
+        ////////////tidy
     };
 
     class PrimeIterator {
@@ -172,6 +289,30 @@ namespace ariel
 
         PrimeIterator begin();
         PrimeIterator end();
+        //////////////////tidy
+        // Move constructor
+        PrimeIterator(PrimeIterator&& other)noexcept
+            : container(other.container), current(other.current), currentIndex(other.currentIndex) {
+            // Reset other's data
+            other.current = nullptr;
+            other.currentIndex = 0;
+        }
+
+        // Move assignment operator
+        PrimeIterator& operator=(PrimeIterator&& other) noexcept{
+            if (this != &other) {
+                // Move other's data
+                current = other.current;
+                currentIndex = other.currentIndex;
+
+                // Reset other's data
+                other.current = nullptr;
+                other.currentIndex = 0;
+            }
+
+            return *this;
+        }
+        //////////////////tidy
     };
 };
 }

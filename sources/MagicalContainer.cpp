@@ -4,18 +4,22 @@ namespace ariel {
     MagicalContainer::MagicalContainer()
     {
         this->elements = nullptr;
+        this->prime = nullptr;
+        this->end = nullptr;
         this->Size = 0;
         this->primesize = 0;
     }
     MagicalContainer::~MagicalContainer()
     {
-        while (this->elements->Getnext() != nullptr)
+        if(this->elements != nullptr)
         {
-            this->elements = this->elements->Getnext();
-            delete(this->elements->Getprev());
+            while (this->elements->Getnext() != nullptr)
+            {
+                this->elements = this->elements->Getnext();
+                delete(this->elements->Getprev());
+            }
+            delete(this->elements);
         }
-        delete(this->elements);
-        
     }
     void MagicalContainer::addElement(int element)
     {
@@ -24,12 +28,13 @@ namespace ariel {
         //if this is the first element in the list
         if(this->elements == nullptr)
         {
+            //set first
             if(Newelement->GetisPrime() == true && this->prime == nullptr)
             {
                 this->primesize++;
                 this->prime = Newelement;
             }
-            this->elements = Newelement; 
+            this->elements = Newelement;
             this->Size++;
             return;
         }
@@ -41,12 +46,15 @@ namespace ariel {
         {
             temp = temp->Getnext();
         }
+        // "adding after temp"
         if(temp->Getdata() < Newelement->Getdata())
         {
+            if(temp->Getnext()!= nullptr)
             Newelement->SetNext(temp->Getnext());
             Newelement->SetPrev(temp);
             temp->SetNext(Newelement);
         }
+        // "adding befor temp"
         if(temp->Getdata() > Newelement->Getdata())
         {
             if(temp->Getprev() == nullptr)
@@ -65,36 +73,47 @@ namespace ariel {
         //if Newelement is prime 
         if(Newelement->GetisPrime() == true)
         {
-            this->primesize ++;
-            // not the first element in the list that is aken car of up top
-            // create a new pointer to the prime 
-            temp = this->prime;
-            //move the pointer to next prime
-            while (temp->GetprimeNext() != nullptr && temp->Getdata() < Newelement->Getdata())
+            if(this->prime == nullptr)
             {
-                temp = temp->GetprimeNext();
+                this->primesize++;
+                this->prime = Newelement;
             }
-            if(temp->Getdata() < Newelement->Getdata())
+            else
             {
-                Newelement->SetprimeNext(temp->GetprimeNext());
-                Newelement->SetprimePrev(temp);
-                temp->SetprimeNext(Newelement);
-            }
-            if(temp->Getdata() > Newelement->Getdata())
-            {
-                if(temp->GetprimePrev() == nullptr)
+                this->primesize ++;
+                // not the first element in the list that is aken car of up top
+                // create a new pointer to the prime 
+                temp = this->prime;
+                //move the pointer to next prime
+                while (temp->GetprimeNext() != nullptr && temp->Getdata() < Newelement->Getdata())
                 {
-                    this->prime = Newelement;
+                    temp = temp->GetprimeNext();
                 }
-                if(temp->GetprimePrev() != nullptr)
+                //adding after temp
+                if(temp->Getdata() < Newelement->Getdata())
                 {
-                    temp->GetprimePrev()->SetprimeNext(Newelement);
+                    Newelement->SetprimeNext(temp->GetprimeNext());
+                    Newelement->SetprimePrev(temp);
+                    temp->SetprimeNext(Newelement);
                 }
-                Newelement->SetprimeNext(temp);
-                Newelement->SetprimePrev(temp->GetprimePrev());
-                temp->SetprimePrev(Newelement);
+                //adding before temp
+                if(temp->Getdata() > Newelement->Getdata())
+                {
+                    if(temp->GetprimePrev() == nullptr)
+                    {
+                        this->prime = Newelement;
+                    }
+                    if(temp->GetprimePrev() != nullptr)
+                    {
+                        temp->GetprimePrev()->SetprimeNext(Newelement);
+                    }
+                    Newelement->SetprimeNext(temp);
+                    Newelement->SetprimePrev(temp->GetprimePrev());
+                    temp->SetprimePrev(Newelement);
+                }
             }
         }
+        //getting end
         temp = this->elements;
         while (temp->Getnext() != nullptr)
         {
@@ -185,6 +204,10 @@ namespace ariel {
     // AscendingIterator
     MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator=(const AscendingIterator& other)
     {
+        if(&this->container != &other.container)
+        {
+            throw runtime_error("different containers");
+        }
         if (this != &other)
         {
             this->currentIndex = other.currentIndex;
@@ -195,7 +218,14 @@ namespace ariel {
 
     bool MagicalContainer::AscendingIterator::operator==(const AscendingIterator& other) const
     {
-        return currentIndex == other.currentIndex;
+        if(this->currentElement == other.currentElement && &this->container == &other.container)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     bool MagicalContainer::AscendingIterator::operator!=(const AscendingIterator& other) const
@@ -215,6 +245,10 @@ namespace ariel {
 
     MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator++()
     {
+        if(*this == this->end())
+        {
+            throw runtime_error("no more elements");
+        }
         ++currentIndex;
         this->currentElement = this->currentElement->Getnext();
         return *this;
@@ -242,6 +276,10 @@ namespace ariel {
     // SideCrossIterator
     MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator=(const SideCrossIterator& other)
     {
+        if(&this->container != &other.container)
+        {
+            throw runtime_error("different containers");
+        }
         if (this != &other)
         {
             this->start = other.start;
@@ -277,8 +315,12 @@ namespace ariel {
 
     MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++() 
     {
+        if(*this == this->end())
+        {
+            throw runtime_error("no more elements");
+        }
         this->index++;
-        if(container.size()%2 == 1 && this->start == this->End)
+        if(container.size()%2 == 1 && this->start == this->End || container.size() == 1)
         {
             this->start = nullptr;
             this->End = nullptr;
@@ -286,13 +328,11 @@ namespace ariel {
         }
         if(this->FromStart == true)
         {
-            // cout << "start" <<endl;
             this->start = this->start->Getnext();
             this->FromStart = false;
         }
         else
         {
-            // cout << "end" <<endl;
             this->End = this->End->Getprev();
             this->FromStart = true;
         }
@@ -346,6 +386,10 @@ namespace ariel {
 
     MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator=(const PrimeIterator& other)
     {
+        if(&this->container != &other.container)
+        {
+            throw runtime_error("different containers");
+        }
         if (this != &other) {
             this->currentIndex = other.currentIndex;
             this->current = other.current;
@@ -355,17 +399,11 @@ namespace ariel {
 
     bool MagicalContainer::PrimeIterator::operator==(const PrimeIterator& other) const 
     {
-        // if(currentIndex == other.currentIndex && this->current->Getdata()== other.current->Getdata())
-        // {
-        //     return true;
-        // }
-        // return false;
         return currentIndex == other.currentIndex;
     }
 
     bool MagicalContainer::PrimeIterator::operator!=(const PrimeIterator& other) const 
     {
-        // return !(*this == other);
         return currentIndex != other.currentIndex;
     }
 
@@ -381,6 +419,10 @@ namespace ariel {
 
     MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator++() 
     {
+        if(*this == this->end())
+        {
+            throw runtime_error("no more elements");
+        }
         currentIndex++;
         this->current = this->current->GetprimeNext();
         return *this;

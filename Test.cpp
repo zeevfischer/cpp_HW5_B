@@ -28,7 +28,9 @@ TEST_CASE("MagicalContainer AscendingIterator") {
 
         // Test begin() and end()
         MagicalContainer::AscendingIterator ascIt(container);
+        ascIt = ascIt.begin();
         MagicalContainer::AscendingIterator ascEnd(container);
+        ascEnd = ascEnd.end();
 
         // Iterate over the container using AscendingIterator
         int expected[] = {2, 3, 5, 8};
@@ -50,7 +52,9 @@ TEST_CASE("MagicalContainer SideCrossIterator") {
 
         // Test begin() and end()
         MagicalContainer::SideCrossIterator crossIt(container);
+        crossIt = crossIt.begin();
         MagicalContainer::SideCrossIterator crossEnd(container);
+        crossEnd = crossEnd.end();
 
         // Iterator should be equal to end() for an empty container
         CHECK(crossIt == crossEnd);
@@ -69,10 +73,12 @@ TEST_CASE("MagicalContainer SideCrossIterator") {
 
         // Test begin() and end()
         MagicalContainer::SideCrossIterator crossIt(container);
+        crossIt = crossIt.begin();
         MagicalContainer::SideCrossIterator crossEnd(container);
+        crossEnd = crossEnd.end();
 
         // Iterate over the container using SideCrossIterator
-        int expected[] = {5, 8, 3, 2, 7};
+        int expected[] = {2, 8, 3, 7, 5};
         int index = 0;
         while (crossIt != crossEnd) {
             CHECK(*crossIt == expected[index]);
@@ -91,7 +97,9 @@ TEST_CASE("MagicalContainer PrimeIterator") {
 
         // Test begin() and end()
         MagicalContainer::PrimeIterator primeIt(container);
+        primeIt = primeIt.begin();
         MagicalContainer::PrimeIterator primeEnd(container);
+        primeEnd = primeEnd.end();
 
         // Iterator should be equal to end() for an empty container
         CHECK(primeIt == primeEnd);
@@ -110,17 +118,19 @@ TEST_CASE("MagicalContainer PrimeIterator") {
 
         // Test begin() and end()
         MagicalContainer::PrimeIterator primeIt(container);
+        primeIt = primeIt.begin();
         MagicalContainer::PrimeIterator primeEnd(container);
+        primeEnd = primeEnd.end();
 
         // Iterate over the container using PrimeIterator
-        int expected[] = {2, 5, 7};
+        int expected[] = {2 , 3, 5, 7};
         int index = 0;
         while (primeIt != primeEnd) {
             CHECK(*primeIt == expected[index]);
             ++primeIt;
             ++index;
         }
-        CHECK(index == 3);
+        CHECK(index == 4);
     }
 }
 
@@ -135,7 +145,9 @@ TEST_CASE("MagicalContainer AscendingIterator") {
 
         // Test begin() and end()
         MagicalContainer::AscendingIterator ascIt(container);
+        ascIt = ascIt.begin();
         MagicalContainer::AscendingIterator ascEnd(container);
+        ascEnd = ascEnd.end();
 
         // Iterator should be equal to end() for an empty container
         CHECK(ascIt == ascEnd);
@@ -153,7 +165,9 @@ TEST_CASE("MagicalContainer AscendingIterator") {
 
         // Test begin() and end()
         MagicalContainer::AscendingIterator ascIt(container);
+        ascIt = ascIt.begin();
         MagicalContainer::AscendingIterator ascEnd(container);
+        ascEnd = ascEnd.end();
 
         // Iterate over the container using AscendingIterator
         int expected[] = {2, 3, 5, 8};
@@ -175,7 +189,9 @@ TEST_CASE("MagicalContainer SideCrossIterator") {
 
         // Test begin() and end()
         MagicalContainer::SideCrossIterator crossIt(container);
+        crossIt = crossIt.begin();
         MagicalContainer::SideCrossIterator crossEnd(container);
+        crossEnd = crossEnd.end();
 
         // Iterator should be equal to end() for an empty container
         CHECK(crossIt == crossEnd);
@@ -194,10 +210,12 @@ TEST_CASE("MagicalContainer SideCrossIterator") {
 
         // Test begin() and end()
         MagicalContainer::SideCrossIterator crossIt(container);
+        crossIt = crossIt.begin();
         MagicalContainer::SideCrossIterator crossEnd(container);
+        crossEnd = crossEnd.end();
 
         // Iterate over the container using SideCrossIterator
-        int expected[] = {5, 8, 3, 2, 7};
+        int expected[] = {2, 8, 3, 7, 5};
         int index = 0;
         while (crossIt != crossEnd) {
             CHECK(*crossIt == expected[index]);
@@ -216,7 +234,9 @@ TEST_CASE("MagicalContainer PrimeIterator") {
 
         // Test begin() and end()
         MagicalContainer::PrimeIterator primeIt(container);
+        primeIt = primeIt.begin();
         MagicalContainer::PrimeIterator primeEnd(container);
+        primeEnd = primeEnd.end();
 
         // Iterator should be equal to end() for an empty container
         CHECK(primeIt == primeEnd);
@@ -235,17 +255,19 @@ TEST_CASE("MagicalContainer PrimeIterator") {
 
         // Test begin() and end()
         MagicalContainer::PrimeIterator primeIt(container);
+        primeIt = primeIt.begin();
         MagicalContainer::PrimeIterator primeEnd(container);
+        primeEnd = primeEnd.end();
 
         // Iterate over the container using PrimeIterator
-        int expected[] = {2, 5, 7};
+        int expected[] = {2, 3 , 5, 7};
         int index = 0;
         while (primeIt != primeEnd) {
             CHECK(*primeIt == expected[index]);
             ++primeIt;
             ++index;
         }
-        CHECK(index == 3);
+        CHECK(index == 4);
     }
 }
 // Test case for comparing iterators from the same container
