@@ -43,5 +43,43 @@ int main() {
     container.removeElement(9);
     std::cout << "Size of container after removing an element: " << container.size() << std::endl;
 
+
+    MagicalContainer container2;
+    container2.addElement(1);
+    container2.addElement(2);
+    container2.addElement(3);
+    container2.addElement(4);
+    container2.addElement(5);
+    container2.addElement(6);
+    
+    // Print container size
+    std::cout << "Size of container: " << container2.size() << std::endl;
+
+    // Use AscendingIterator to display elements in ascending order
+    std::cout << "Elements in ascending order:\n";
+    MagicalContainer::AscendingIterator ascIter2(container2);
+    for (auto it = ascIter2.begin(); it != ascIter2.end(); ++it) {
+        std::cout << *it << ' ';   // 2 3 9 17 25
+    }
+    std::cout << std::endl;
+
+    // Use DescendingIterator to display elements in descending order
+    std::cout << "Elements in cross order:\n";
+    MagicalContainer::SideCrossIterator crossIter2(container2);
+
+    // cout << (crossIter.begin() == crossIter.end()) <<endl;
+    for (auto it = crossIter2.begin(); it != crossIter2.end(); ++it) {
+        std::cout << *it << ' ';  // 2 25 3 17 9
+    }
+    std::cout << std::endl;
+
+    // Use PrimeIterator to display prime numbers only
+    std::cout << "Prime numbers:\n";
+    MagicalContainer::PrimeIterator primeIter2(container2);
+    for (auto it = primeIter2.begin(); it != primeIter2.end(); ++it) {
+        std::cout << *it << ' ';  // 2 3 17 
+    }
+    std::cout << std::endl;
+
     return 0;
 }
