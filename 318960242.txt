@@ -1,3 +1,0 @@
-https://github.com/zeevfischer/cpp_HW5_B.git
-dc0d707
-318960242
